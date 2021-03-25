@@ -15,6 +15,6 @@ Common Deliverables:
 
 - Shortcut to autolaunch your mod
 - UI changes that reflect a change in your mod
-- code compilation without additional warnings
+X code compilation without additional warnings
 X README that explains all changes and how to demonstrate them
 X mod and sub files contained in a seperate folder and packaged in PK4 files
