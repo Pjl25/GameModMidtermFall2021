@@ -3697,6 +3697,7 @@ void idAI::OnDeath( void ){
 			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
 		}
 	}
+
 }
 
 /*
