@@ -3666,38 +3666,78 @@ idAI::
 ============
 */
 
-void idAI::OnDeath( void ){
-	if( vehicleController.IsDriving() ){
+void idAI::OnDeath(void) {
+	if (vehicleController.IsDriving()) {
 		usercmd_t				usercmd;
 
-		memset( &usercmd, 0, sizeof( usercmd ) );
+		memset(&usercmd, 0, sizeof(usercmd));
 		usercmd.buttons = BUTTON_ATTACK;
 		usercmd.upmove = 300.0f; // This will cause the character to eject.
 
-		vehicleController.SetInput( usercmd, idAngles( 0, 0, 0 ) );
+		vehicleController.SetInput(usercmd, idAngles(0, 0, 0));
 
 		// Fixme!  Is this safe to do immediately?
 		vehicleController.Eject();
 	}
 
-	aiManager.RemoveTeammate ( this );
+	aiManager.RemoveTeammate(this);
 
-	ExecScriptFunction( funcs.death );
+	ExecScriptFunction(funcs.death);
 
 
-	float rVal = gameLocal.random.RandomInt( 50 );
+	float rVal = gameLocal.random.RandomInt(100);
 
-	if( spawnArgs.GetFloat( "no_drops" ) >= 1.0 ){
-		spawnArgs.Set( "def_dropsItem1", "" );
-	}else{
-		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
-		if( rVal < 25 ){	// Half of guys drop nothing?
-			spawnArgs.Set( "def_dropsItem1", "item_health_large" );
-		}else if( rVal < 50 ){
-			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
+	if (spawnArgs.GetFloat("no_drops") >= 1.0) {
+		spawnArgs.Set("def_dropsItem1", "");
+	}
+	else {
+		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here
+		if (rVal < 10) {	//10% chance of either large health or small armor total of 20
+			spawnArgs.Set("def_dropsItem1", "item_health_large");
+		}
+		else if (rVal < 20) {
+			spawnArgs.Set("def_dropsItem1", "item_armor_small");
+		}
+		else if (rVal < 35) {   //15% chance of either small health or armor shard total of 30
+			spawnArgs.Set("def_dropsItem1", "item_health_small");
+		}
+		else if (rVal < 50) {
+			spawnArgs.Set("def_dropsItem1", "item_armor_shard");
+		}
+		else if (rVal < 50) {  //5% chance to drop any of the 9 ammo types, total of 45
+			spawnArgs.Set("def_dropsItem1", "ammo_shotgun");
+		}
+		else if (rVal < 60) {
+			spawnArgs.Set("def_dropsItem1", "ammo_rocketlauncher");
+		}
+		else if (rVal < 65) {
+			spawnArgs.Set("def_dropsItem1", "ammo_railgun");
+		}
+		else if (rVal < 70) {
+			spawnArgs.Set("def_dropsItem1", "ammo_nailgun");
+		}
+		else if (rVal < 75) {
+			spawnArgs.Set("def_dropsItem1", "ammo_machinegun");
+		}
+		else if (rVal < 80) {
+			spawnArgs.Set("def_dropsItem1", "ammo_lightninggun");
+		}
+		else if (rVal < 85) {
+			spawnArgs.Set("def_dropsItem1", "ammo_hyperblaster");
+		}
+		else if (rVal < 90) {
+			spawnArgs.Set("def_dropsItem1", "ammo_grenadelauncher");
+		}
+		else if (rVal < 95) {
+			spawnArgs.Set("def_dropsItem1", "ammo_dmg");
+		}
+		else if (rVal < 97) { //2% chance of mega health or 3% large armor total of 5
+			spawnArgs.Set("def_dropsItem1", "item_health_mega");
+		}
+		else if (rVal < 100) {
+			spawnArgs.Set("def_dropsItem1", "item_armor_large");
 		}
 	}
-
 }
 
 /*
